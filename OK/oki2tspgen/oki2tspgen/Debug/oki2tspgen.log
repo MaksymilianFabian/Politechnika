@@ -1,0 +1,38 @@
+﻿  almost.cpp
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(69,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(140,53): warning C4244: "=": konwersja z "_Ty" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(140,53): warning C4244:         with
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(140,53): warning C4244:         [
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(140,53): warning C4244:             _Ty=double
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(140,53): warning C4244:         ]
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(157,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(188,49): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(198,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(212,14): warning C4244: "return": konwersja z "double" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(245,16): warning C4305: "inicjowanie": obcięcie z "__int64" do "int"
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(245,18): warning C4309: "inicjowanie": obcięcie stałej wartości
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(291,11): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(311,19): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(383,23): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(468,26): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,81): warning C4244: "argument": konwersja z "_Ty" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,81): warning C4244:         with
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,81): warning C4244:         [
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,81): warning C4244:             _Ty=double
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,81): warning C4244:         ]
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,67): warning C4244: "argument": konwersja z "_Ty" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,67): warning C4244:         with
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,67): warning C4244:         [
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,67): warning C4244:             _Ty=double
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,67): warning C4244:         ]
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,53): warning C4244: "argument": konwersja z "_Ty" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,53): warning C4244:         with
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,53): warning C4244:         [
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,53): warning C4244:             _Ty=double
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,53): warning C4244:         ]
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,39): warning C4244: "argument": konwersja z "_Ty" do "int", możliwa utrata danych
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,39): warning C4244:         with
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,39): warning C4244:         [
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,39): warning C4244:             _Ty=double
+C:\Users\Jakub\source\repos\oki2tspgen\oki2tspgen\almost.cpp(471,39): warning C4244:         ]
+  oki2tspgen.vcxproj -> C:\Users\Jakub\source\repos\oki2tspgen\Debug\oki2tspgen.exe
