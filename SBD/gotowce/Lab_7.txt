@@ -1,0 +1,128 @@
+LABY 7
+Zadanie 1.
+select nazwisko, placa_pod
+from pracownicy
+order by placa_pod desc
+fetch first 3 rows only;
+
+
+Zadanie 2.
+select nazwisko, placa_pod
+from pracownicy
+order by placa_pod desc
+offset 5 rows fetch next 5 rows with ties;
+
+
+Zadanie 3.
+with srednia_placa_w_zesp as
+(select  z.id_zesp, avg(placa_pod) as srednia
+from pracownicy p
+join zespoly z
+on p.id_zesp = z.id_zesp
+group by z.id_zesp)
+select p.nazwisko, p.placa_pod, p.placa_pod - s.srednia as roznica
+from pracownicy p
+join srednia_placa_w_zesp s
+on p.id_zesp = s.id_zesp
+where p.placa_pod > s.srednia;
+
+
+Zadanie 4.
+with lata as 
+(select extract('Year' from zatrudniony) as rok, count(id_prac) as liczba
+from pracownicy p
+group by rok
+order by liczba desc)
+select * from lata;
+
+
+zadanie 5.
+with lata as 
+(select extract('Year' from zatrudniony) as rok, count(id_prac) as liczba
+from pracownicy p
+group by rok
+order by liczba desc)
+select * from lata
+fetch first 1 rows only;
+
+
+zadanie 6.
+with asystenci as
+(select id_zesp, nazwisko, etat
+from pracownicy
+where etat = 'ASYSTENT'),
+piotrowo as
+(select id_zesp, nazwa, adres
+from zespoly 
+where adres = 'PIOTROWO 3A')
+select a.nazwisko, a.etat, p.nazwa, p.adres 
+from asystenci a
+join piotrowo p
+on a.id_zesp = p.id_zesp;
+
+
+zadanie 7.
+with suma_plac_w_zesp as 
+(select z.nazwa, sum(placa_pod) as maks_suma_plac
+from pracownicy p
+join zespoly z
+on p.id_zesp = z.id_zesp
+group by z.id_zesp
+order by maks_suma_plac desc)
+select *
+from suma_plac_w_zesp
+fetch first 1 rows only;
+
+
+zadanie 8.
+with recursive
+podwladni(id_prac, id_szefa, nazwisko, poziom) as 
+(select id_prac, id_szefa, nazwisko, 1
+from pracownicy
+where nazwisko = 'BRZEZINSKI'
+UNION ALL
+select p.id_prac, p.id_szefa, p.nazwisko, poziom+1
+from podwladni s join pracownicy p on s.id_prac = p.id_szefa)
+SEARCH DEPTH FIRST BY nazwisko SET porzadek_potomkow
+SELECT nazwisko, poziom as pozycja_w_hierarchii
+FROM podwladni
+ORDER BY porzadek_potomkow;
+
+
+zadanie 9.
+WITH RECURSIVE
+    podwladni(id_prac, id_szefa, nazwisko, poziom) AS (
+        SELECT id_prac, id_szefa, nazwisko, 1
+        FROM pracownicy
+        WHERE nazwisko = 'BRZEZINSKI'
+        UNION ALL
+        SELECT p.id_prac, p.id_szefa, p.nazwisko, s.poziom + 1
+        FROM podwladni s
+        JOIN pracownicy p ON s.id_prac = p.id_szefa
+    )
+    SEARCH DEPTH FIRST BY nazwisko SET porzadek_potomkow
+SELECT 
+    LPAD(' ', (poziom - 1) * 2) || nazwisko AS nazwisko,
+    poziom AS pozycja_w_hierarchii
+FROM 
+    podwladni
+ORDER BY 
+    porzadek_potomkow;
+
+zadanie 10.
+WITH cyfra_nazwa(cyfra, nazwa) AS (
+    SELECT cyfra, nazwa
+    FROM (VALUES
+        (0,'zero'),(1,'jeden'),(2,'dwa'),(3,'trzy'),
+        (4,'cztery'),(5,'piec'),(6,'szesc'),
+        (7,'siedem'),(8,'osiem'),(9,'dziewiec')
+    ) AS V(cyfra, nazwa)
+)
+SELECT 
+    p.nazwisko || ', zarobki w tysiącach: ' || c.nazwa AS zarobki
+FROM 
+    pracownicy p
+JOIN 
+    cyfra_nazwa c ON FLOOR((p.placa_pod + p.placa_dod) / 1000) = c.cyfra
+ORDER BY 
+    p.nazwisko;

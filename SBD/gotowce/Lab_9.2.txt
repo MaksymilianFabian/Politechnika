@@ -1,0 +1,128 @@
+Zadanie 1.
+alter table projekty
+add constraint pk_projekty primary key (id_projektu);
+
+alter table projekty
+add constraint uk_projekty unique (opis_projektu);
+
+alter table projekty
+alter column opis_projektu set not null;
+
+alter table projekty
+add constraint chk_daty check(data_zakonczenia > data_rozpoczecia);
+
+alter table projekty
+add constraint chk_funduszy check(fundusz > 0);
+
+SELECT t1.constraint_name, t1.constraint_type, t2.check_clause
+FROM information_schema.table_constraints t1 LEFT JOIN
+information_schema.check_constraints t2
+ON t1.constraint_name = t2.constraint_name
+AND t1.constraint_schema = t2.constraint_schema
+WHERE table_schema = 'sbd155960' AND table_name = 'projekty'
+ORDER BY constraint_name;
+
+Zadanie 2.
+insert into projekty 
+(opis_projektu, data_rozpoczecia, data_zakonczenia, fundusz)
+values('Indeksy bitmapowe', '2015.04.12', '2016.09.30', 40000);
+
+Nie zakończyło się powodzeniem, przez ustawienie opisu jako unique.
+
+Zadanie 3.
+create table przydzialy (
+id_projektu integer constraint fk_przydzialy_01 references projekty(id_projektu),
+nr_pracownika numeric(6) constraint fk_przydzialy_02 references pracownicy(id_prac),
+przydzial_od date default current_date,
+przydzial_do date constraint chk_przydzialy_daty check(przydzial_do > przydzial_od),
+stawka numeric(7,2) constraint chk_przydzialy_stawka check(stawka > 0),
+rola varchar(20) constraint chk_przydzialy_rola check(rola in ('KIERUJACY','ANALITYK', 'PROGRAMISTA')),
+constraint pk_przydzialy primary key(id_projektu, nr_pracownika)
+);
+
+Zadanie 4.
+insert into przydzialy
+(id_projektu, nr_pracownika, przydzial_od, przydzial_do, stawka, rola)
+values((select id_projektu from projekty where opis_projektu = 'Indeksy bitmapowe'), 170, '1999.04.10', '1999.05.10', 1000, 'KIERUJACY');
+
+insert into przydzialy
+(id_projektu, nr_pracownika, przydzial_od, stawka, rola)
+values((select id_projektu from projekty where opis_projektu = 'Indeksy bitmapowe'), 140, '1999.12.01', 1500, 'ANALITYK');
+
+insert into przydzialy
+(id_projektu, nr_pracownika, przydzial_od, stawka, rola)
+values((select id_projektu from projekty where opis_projektu = 'Sieci kręgosłupowe'), 140, '1999.09.14', 2500, 'KIERUJACY');
+
+Zadanie 5.
+alter table przydzialy 
+add godziny INTEGER NOT NULL,
+add constraint chk_godziny check(godziny <= 9999);
+
+nie można dodać kolumny not null, jeżeli są już jakieś rekordy
+
+Zadanie 6.
+alter table przydzialy
+add godziny INTEGER;
+
+update przydzialy
+set godziny = 4
+where id_projektu = 1;
+
+update przydzialy
+set godziny = 5
+where id_projektu = 2;
+
+update przydzialy
+set godziny = 6
+where id_projektu = 3;
+
+alter table przydzialy
+alter column godziny SET NOT NULL,
+add constraint chk_godziny check (godziny <= 9999);
+
+Zadanie 11.
+alter table projekty 
+alter column opis_projektu type varchar(10);
+Nie, ponieważ istnieje dłuższa wartość.
+
+Zadanie 12.
+delete from projekty 
+where opis_projektu = 'Sieci kręgosłupowe';
+Sieci kręgosłupowe są używane w tabeli przydziały.
+
+Zadanie 13.
+alter table przydzialy
+drop constraint fk_przydzialy_01;
+
+alter table przydzialy 
+add constraint fk_przydzialy_01
+foreign key(id_projektu)
+references projekty(id_projektu)
+on delete cascade;
+
+delete from projekty where opis_projektu = 'Sieci kręgosłupowe';
+
+select * from projekty;
+select * from przydzialy;
+
+Zadanie 14.
+SELECT t1.constraint_name, t1.constraint_type, t2.check_clause 
+FROM information_schema.table_constraints t1 
+LEFT JOIN information_schema.check_constraints t2 
+ON t1.constraint_name = t2.constraint_name AND t1.constraint_schema = t2.constraint_schema 
+WHERE table_schema = ‘sbd155960’ AND 
+table_name = 'przydzialy' 
+ORDER BY constraint_name;
+
+Zadanie 15.
+drop table projekty cascade;
+
+Zadanie 16.
+drop table przydzialy;
+drop table projekty_kopia;
+
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'sbd155960'
+ORDER BY table_name;
+

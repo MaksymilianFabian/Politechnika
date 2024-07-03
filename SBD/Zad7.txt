@@ -1,0 +1,129 @@
+1. select nazwisko, placa_pod 
+from pracownicy
+order by placa_pod desc 
+fetch first 3 rows only;
+
+select nazwisko, placa_pod 
+from pracownicy 
+where rownum <= 3 
+order by placa_pod desc;
+
+2. select nazwisko, placa_pod 
+from pracownicy 
+order by placa_pod desc 
+offset 5 rows
+fetch next 5 rows with ties;
+
+select nazwisko, placa_pod from
+    (select nazwisko, placa_pod, rownum as rn
+    from (select nazwisko, placa_pod
+    from pracownicy
+    order by placa_pod desc))
+where rn between 6 and 10;
+
+3. with srednie_place as (
+    select id_zesp, avg(placa_pod) as srednia
+    from pracownicy
+    group by id_zesp)
+select nazwisko, placa_pod, placa_pod-srednia as roznica
+from srednie_place join pracownicy
+using (id_zesp)
+where placa_pod-srednia > 0
+order by nazwisko;
+
+4. with lata as (
+    select extract(year from zatrudniony) as rok,
+    count(*) as liczba
+    from pracownicy
+    group by extract(year from zatrudniony))
+select * from lata
+order by liczba desc;
+
+5. with lata as (
+    select extract(year from zatrudniony) as rok,
+    count(*) as liczba
+    from pracownicy
+    group by extract(year from zatrudniony))
+select * from lata
+where liczba = (select max(liczba) from lata)
+order by liczba desc;
+
+6. with asystenci as
+(select nazwisko, etat, id_zesp
+from pracownicy
+where etat='ASYSTENT'),
+piotrowo as
+(select nazwa, adres, id_zesp
+from zespoly
+where adres like 'PIOTROWO%')
+select nazwisko, etat, nazwa, adres
+from asystenci 
+join piotrowo using (id_zesp);
+
+7. with place as (
+    select id_zesp, sum(placa_pod) as suma_plac
+    from pracownicy
+    group by id_zesp
+)
+select z.nazwa, p.suma_plac as maks_suma_plac
+from place p
+join zespoly z on z.id_zesp = p.id_zesp
+where p.suma_plac = (select max(suma_plac) from place);
+
+8. with podwladni (
+    id_prac, id_szefa, nazwisko, pozycja_w_hierarchii
+)
+as(
+    select id_prac, id_szefa, nazwisko, 1
+    from pracownicy
+    where nazwisko = 'BRZEZINSKI'
+    union all
+    select p.id_prac, p.id_szefa, p.nazwisko, pozycja_w_hierarchii+1
+    from podwladni s
+    join pracownicy p on s.id_prac = p.id_szefa)
+select nazwisko, pozycja_w_hierarchii
+from podwladni
+order by pozycja_w_hierarchii, nazwisko;
+
+
+select nazwisko, level as pozycja_w_hierarchii
+from pracownicy
+connect by id_szefa = prior id_prac
+start with nazwisko = 'BRZEZINSKI'
+order siblings by nazwisko;
+
+9.  with podwladni (
+    id_prac, id_szefa, nazwisko, pozycja_w_hierarchii
+)
+as(
+    select id_prac, id_szefa, nazwisko, 1
+    from pracownicy
+    where nazwisko = 'BRZEZINSKI'
+    union all
+    select p.id_prac, p.id_szefa, p.nazwisko, pozycja_w_hierarchii+1
+    from podwladni s
+    join pracownicy p on s.id_prac = p.id_szefa)
+select lpad(nazwisko, length(nazwisko)+pozycja_w_hierarchii-1, ' ') as nazwisko, pozycja_w_hierarchii
+from podwladni
+order by pozycja_w_hierarchii, nazwisko;
+
+10. WITH DigitToName AS (
+    SELECT 0 AS digit, 'zero' AS name FROM dual
+    UNION ALL
+    SELECT 1, 'jeden' FROM dual
+    UNION ALL
+    SELECT 2, 'dwa' FROM dual
+    UNION ALL
+    SELECT 3, 'trzy' FROM dual
+    UNION ALL
+    SELECT 4, 'cztery' FROM dual
+)
+
+SELECT
+    p.nazwisko || ', zarobki w tysiącach: ' || d.name as zarobki
+FROM
+    pracownicy p
+JOIN
+    DigitToName d on d.digit = floor((placa_pod + coalesce(placa_dod, 0))/1000)
+ORDER BY p.nazwisko;
+

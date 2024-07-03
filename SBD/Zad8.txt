@@ -1,0 +1,184 @@
+1. INSERT INTO pracownicy (id_prac, nazwisko, ETAT, ZATRUDNIONY, PLACA_POD, placa_dod, ID_ZESP)
+VALUES(250, 'KOWALSKI', 'ASYSTENT', '2015-01-13', 1500, NULL, 10);
+INSERT INTO pracownicy (id_prac, nazwisko, ETAT, ZATRUDNIONY, PLACA_POD, placa_dod, ID_ZESP)
+VALUES(260, 'ADAMSKI', 'ASYSTENT', '2014-09-10', 1500, NULL, 10);
+INSERT INTO pracownicy (id_prac, nazwisko, ETAT, ZATRUDNIONY, PLACA_POD, placa_dod, ID_ZESP)
+VALUES(270, 'NOWAK', 'ADIUNKT', '1990-05-01', 2050, 540, 20);
+select * from pracownicy where id_prac in (250,260,270);
+
+2. update pracownicy
+set
+    placa_pod = placa_pod * 1.1,
+    placa_dod = case
+        when placa_dod is null then 100
+        else placa_dod * 1.2
+        end
+where id_prac in (250, 260, 270);
+
+select * from pracownicy where id_prac in(250, 260, 270);
+
+3. insert into zespoly (id_zesp, nazwa, adres)
+values (60, 'BAZY DANYCH', 'PIOTROWO 2');
+
+select * from zespoly where id_zesp = 60
+
+4. update pracownicy
+set id_zesp = (
+    select id_zesp
+    from zespoly
+    where nazwa = 'BAZY DANYCH'
+)
+where id_prac in (250, 260, 270);
+
+select * 
+from pracownicy p
+join zespoly z on p.id_zesp = z.id_zesp
+where z.nazwa = 'BAZY DANYCH';
+
+5. update pracownicy
+set id_szefa = (
+    select id_prac
+    from pracownicy
+    where nazwisko = 'MORZY'
+)
+where id_zesp = (
+    select id_zesp
+    from zespoly
+    where nazwa = 'BAZY DANYCH'
+);
+
+select * 
+from pracownicy
+where id_szefa = (
+    select id_prac
+    from pracownicy
+    where nazwisko = 'MORZY'
+)
+
+6. delete from zespoly where nazwa = 'BAZY DANYCH';
+Przez powiązanie tabeli kluczem obcym z innymi tabelami
+
+7. select nazwa, id_zesp from zespoly;
+delete from pracownicy where id_zesp = 60;
+delete from zespoly where nazwa = 'BAZY DANYCH';
+select * from zespoly;
+select * from pracownicy;
+
+8. select
+p.nazwisko,
+p.placa_pod,
+round(0.1 * z.srednia_placa, 2) as podwyzka
+from pracownicy p
+join (
+    select
+    id_zesp,
+    avg(placa_pod) as srednia_placa
+    from pracownicy
+    group by id_zesp
+) z on p.id_zesp = z.id_zesp
+order by p.nazwisko;
+
+9. update pracownicy p
+set placa_pod = placa_pod + (
+    select round(0.1*avg(p1.placa_pod), 2)
+    from pracownicy p1
+    where p1.id_zesp = p.id_zesp
+    group by p1.id_zesp
+);
+
+select nazwisko, placa_pod from pracownicy order by nazwisko;
+
+10. select * from pracownicy 
+where placa_pod = (
+    select min(placa_pod) 
+    from pracownicy
+);
+
+11. update pracownicy 
+set placa_pod = (
+    select round(avg(placa_pod), 2)
+    from pracownicy
+)
+where placa_pod = (
+    select min(placa_pod)
+    from pracownicy
+);
+
+select * from pracownicy 
+where id_prac = 200;
+
+12. update pracownicy 
+set placa_dod = (
+    select round(avg(placa_pod), 2)
+    from pracownicy
+    where id_szefa = (
+        select id_prac
+        from pracownicy
+        where nazwisko = 'MORZY'
+    )
+)
+where id_zesp = 20;
+
+select nazwisko, placa_dod from pracownicy where id_zesp = 20
+order by nazwisko;
+
+13. update pracownicy p 
+set p.placa_pod = p.placa_pod * 1.25
+where p.id_zesp = (
+    select id_zesp
+    from zespoly
+    where nazwa = 'SYSTEMY ROZPROSZONE'
+);
+
+select nazwisko, placa_pod 
+from pracownicy 
+where id_zesp = 20
+order by nazwisko;
+
+14. 
+
+delete from pracownicy
+where id_prac in (
+    select p.id_prac
+    from pracownicy p
+    join pracownicy s on p.id_szefa = s.id_prac
+    where s.nazwisko = 'MORZY'
+);
+
+select 
+p.nazwisko as pracownik,
+s.nazwisko as szef 
+from pracownicy p
+join pracownicy s on p.id_szefa = s.id_prac 
+where s.nazwisko = 'MORZY';
+
+15. select * from pracownicy order by nazwisko;
+
+16. create sequence prac_seq
+start with 300
+increment by 10;
+
+17. insert into pracownicy (id_prac, nazwisko, etat, placa_pod)
+values (prac_seq.nextval, 'Trąbczyński', 'STAZYSTA', 1000);
+
+select * from pracownicy where nazwisko = 'Trąbczyński';
+
+18. update pracownicy 
+set placa_pod = prac_seq.currval
+where nazwisko = 'Trąbczyński';
+
+select * from pracownicy where nazwisko = 'Trąbczyński';
+
+19. delete from pracownicy 
+where nazwisko = 'Trąbczyński';
+
+20. create sequence mala_seq
+start with 1
+increment by 1
+maxvalue 10
+nocycle;
+
+alter sequence mala_seq increment by 10;
+
+21. drop sequence mala_seq;
+

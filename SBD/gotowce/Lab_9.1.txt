@@ -1,0 +1,62 @@
+
+Zadanie 1.
+create table PROJEKTY (
+ID_PROJEKTU INTEGER generated always as identity,
+OPIS_PROJKETU character varying (20),
+DATA_ROZPOCZECIA DATE default current_date,
+DATA_ZAKONCZENIA DATE,
+FUNDUSZ NUMERIC(7,2)
+);
+
+Zadanie 2
+insert into projekty
+(OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Indeksy bitmapowe', '1999.04.02', '2001.08.31', 25000);
+insert into projekty
+(OPIS_PROJEKTU, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Sieci kręgosłupowe', null, 19000);
+
+Zadanie 3.
+select ID_PROJEKTU, OPIS_PROJEKTU
+from projekty;
+
+Zadanie 4
+insert into projekty
+(ID_PROJEKTU, OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values(10, 'Indeksy drzewiaste', '2013.12.24', '2014.01.01', 1200);
+Nie zakończyło sie sukcesem.
+
+insert into projekty
+(OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Indeksy drzewiaste', '2013.12.24', '2014.01.01', 1200);
+
+Zadanie 5.
+update projekty
+set ID_PROJEKTU = 10
+where OPIS_PROJEKTU = 'Indeksy drzewiaste';
+Operacja się nie powiodła.
+
+Zadanie 6.
+create table PROJEKTY_KOPIA
+as select * from PROJEKTY;
+select * from projekty;
+
+Zadanie 7.
+insert into PROJEKTY_KOPIA
+(ID_PROJEKTU, OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values(10, 'Sieci lokalne', current_date, CURRENT_DATE+INTERVAL '1' YEAR, 24500);
+powiodło się, ponieważ kopia tabeli nie zachowała atrybutu 'generate always'
+
+Zadanie 8.
+delete from PROJEKTY
+where OPIS_PROJEKTU = 'Indeksy drzewiaste';
+select * from PROJEKTY_KOPIA
+where OPIS_PROJEKTU = 'Indeksy drzewiaste';
+
+Usunięcie nie modyfikuje kopii.
+
+Zadanie 9.
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'sbd155960'
+ORDER BY table_name;

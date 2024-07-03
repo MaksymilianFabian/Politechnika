@@ -1,0 +1,37 @@
+1. create table PROJEKTY (
+    ID_PROJEKTU INT GENERATED ALWAYS AS IDENTITY,
+    OPIS_PROJEKTU VARCHAR(20),
+    DATA_ROZPOCZECIA DATE DEFAULT CURRENT_DATE,
+    DATA_ZAKONCZENIA DATE,
+    FUNDUSZ DECIMAL(7,2)
+)
+
+
+2. insert into PROJEKTY (OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Indeksy bitmapowe', '99/02/04', '01/08/31', 25000)
+
+insert into PROJEKTY (OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Sieci kręgosłupowe', default, NULL, 19000)
+
+3. select id_projektu, opis_projektu from projekty
+
+4. insert into PROJEKTY (ID_PROJEKTU, OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values(10, 'Indeksy drzewiaste', '13/12/24', '14/01/01', 1200)
+
+Polecenie nie zakończyło się sukcesem.
+
+insert into PROJEKTY (OPIS_PROJEKTU, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA, FUNDUSZ)
+values('Indeksy drzewiaste', '13/12/24', '14/01/01', 1200)
+
+5. update projekty 
+set id_projektu = 10
+where opis_projektu = 'Indeksy drzewiaste'
+
+Operacja się nie powiodła. 
+
+6. create table projekty_kopia as
+select * from projekty 
+
+select * from projekty_kopia
+
+7. 

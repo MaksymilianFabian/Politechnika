@@ -1,0 +1,70 @@
+Zadanie 1.
+create view asystenci(nazwisko, placa, staz)
+as
+select nazwisko, placa_pod + coalesce(placa_dod, 0), 'lat: ' || EXTRACT('Year' FROM CURRENT_DATE) - EXTRACT('Year' FROM zatrudniony) || ', miesiecy: ' || EXTRACT('Month' FROM zatrudniony) - EXTRACT('Month' FROM CURRENT_DATE)
+from pracownicy
+where etat = 'ASYSTENT';
+
+Zadanie 2.
+create view place(id_zesp, srednia, minimum, maximum, fundusz, l_pensji, l_dodatkow)
+as
+select p.id_zesp, avg(p.placa_pod), max(p.placa_pod), min(p.placa_pod), sum(p.placa_pod), count(placa_pod), count(placa_dod)
+from pracownicy p
+join zespoly z
+on p.id_zesp = z.id_zesp
+group by p.id_zesp;
+
+select * from place order by id_zesp;
+
+Zadanie 3.
+select nazwisko, placa_pod + coalesce(placa_dod, 0) as placa_razem
+from pracownicy p
+join place p2
+on p.id_zesp = p2.id_zesp
+where placa_pod + coalesce(placa_dod, 0) < p2.srednia;
+
+Zadanie 4.
+create view place_minimalne(id_prac, nazwisko, etat, placa_pod)
+as select id_prac, nazwisko, etat, placa_pod
+from pracownicy
+where placa_pod < 700
+with check option constraint naruszono_limit;
+
+Zadanie 5.
+update place_minimalne
+set placa_pod = 800
+where nazwisko = 'HAPKE'
+
+Zadanie 6.
+create view prac_szef(id_prac, id_szefa, pracownik, etat, szef)
+as select p.id_prac, p.id_szefa, p.nazwisko, p.etat, s.nazwisko
+from pracownicy p
+left join pracownicy s
+on p.id_szefa = s.id_prac
+order by p.nazwisko;
+
+INSERT INTO PRAC_SZEF (ID_PRAC, ID_SZEFA, PRACOWNIK, ETAT)
+VALUES (280,150, 'MORZY','ASYSTENT'); 
+
+UPDATE PRAC_SZEF SET ID_SZEFA = 130 WHERE ID_PRAC = 280; 
+
+DELETE FROM PRAC_SZEF WHERE ID_PRAC = 280;
+
+Zadanie 7.
+create or replace view zarobki
+as select id_prac, id_szefa, nazwisko, etat, placa_pod
+from pracownicy p
+where placa_pod <= (select placa_pod from pracownicy where id_prac = p.id_szefa)
+with check option constraint chk_zarobki;
+
+Zadanie 8.
+SELECT view_definition, check_option,
+is_updatable, is_insertable_into
+FROM information_schema.view
+WHERE table_schema = 'sbd155960' AND table_name = 'zarobki';
+
+Zadanie 9.
+SELECT view_definition, check_option,
+is_updatable, is_insertable_into
+FROM information_schema.views
+WHERE table_schema = 'sbd155960' AND table_name = 'prac_szef';

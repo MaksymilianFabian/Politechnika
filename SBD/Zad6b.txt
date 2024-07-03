@@ -1,0 +1,41 @@
+Zadanie 1.
+select z.id_zesp, z.nazwa, z.adres from zespoly z where not exists (select p.id_zesp from pracownicy p where p.id_zesp = z.id_zesp);
+Zadanie 2.
+select p.nazwisko, p.placa_pod, p.etat from pracownicy p where p.placa_pod > (select avg(p1.placa_pod) from pracownicy p1 group by p1.etat having p1.etat = p.etat)order by p.placa_pod desc;
+Zadanie 3.
+select p.nazwisko, p.placa_pod from pracownicy p where p.placa_pod > (select 0.75*p1.placa_pod from pracownicy p1 where p1.id_prac = p.id_szefa) order by p.placa_pod desc;
+Zadanie 4.
+select p.nazwisko from pracownicy p where p.etat = 'PROFESOR' and not exists (select s.etat from pracownicy s where s.id_szefa = p.id_prac and s.etat = 'STAZYSTA') order by p.nazwisko;
+Zadanie 5.
+select z.nazwa, m.maks_suma_plac from (
+    select max(s.suma_plac) as maks_suma_plac from (
+        select id_zesp, sum(placa_pod) as suma_plac
+        from pracownicy group by id_zesp) s) m join (
+    select id_zesp, sum(placa_pod) as suma_plac
+    from pracownicy group by id_zesp) sp on m.maks_suma_plac = sp.suma_plac
+join zespoly z on sp.id_zesp =z.id_zesp;
+Zadanie 6.
+select nazwisko, placa_pod from pracownicy p1 where placa_pod in (select placa_pod from pracownicy where placa_pod >= p1.placa_pod order by placa_pod desc fetch first 3 rows only) order by placa_pod desc;
+Zadanie 7.
+(1) select p.nazwisko, p.placa_pod, p.placa_pod - (select avg(placa_pod) from pracownicy where id_zesp = p.id_zesp) as roznica from pracownicy p order by p.nazwisko;
+(2) select p.nazwisko, p.placa_pod, p.placa_pod - s.srednia_placa as roznica from pracownicy p join (select id_zesp, avg(placa_pod) as srednia_placa from pracownicy group by id_zesp) s on p.id_zesp = s.id_zesp order by p.nazwisko;
+Zadanie 8.
+(1) select p.nazwisko, p.placa_pod, p.placa_pod - (select avg(placa_pod) from pracownicy where id_zesp = p.id_zesp) as roznica from pracownicy p where p.placa_pod - (select avg(placa_pod) from pracownicy where id_zesp = p.id_zesp) > 0 order by p.nazwisko;
+(2) select p.nazwisko, p.placa_pod, p.placa_pod - s.srednia_placa AS roznica from pracownicy p join (select id_zesp, avg(placa_pod) as srednia_placa from pracownicy group by id_zesp) s on p.id_zesp = s.id_zesp where p.placa_pod - s.srednia_placa > 0 order by p.nazwisko;
+Zadanie 9.
+select p.nazwisko, (select count(*) from pracownicy s where s.id_szefa = p.id_prac) as podwładni from pracownicy p
+inner join zespoly z on z.id_zesp = p.id_zesp
+where p.etat = 'PROFESOR' and z.adres like 'PIOTROWO%' order by podwładni desc;
+Zadanie 10.
+select nazwa, (select coalesce(avg(placa_pod),0) from pracownicy where id_zesp = z.id_zesp) as srednia_w_zespole,
+(select round(avg(placa_pod),2) from pracownicy) as srednia_ogolna,
+case
+    when (select count(*) from pracownicy where id_zesp = z.id_zesp) = 0 then '???'
+    when (select coalesce(avg(placa_pod),0) from pracownicy where id_zesp = z.id_zesp)>=(select round(avg(placa_pod),2) from pracownicy) then ':)'
+    else ':('
+end as nastroje
+from zespoly z
+order by nazwa;
+Zadanie 11.
+select * from etaty e
+order by (select count(*) from pracownicy where etat=e.nazwa) desc, nazwa asc;
