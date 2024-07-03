@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7288C82C-3F3E-4501-8878-A310FCA284FE}|gkiw_st_10_win.vcxproj|C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\f_simplest.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7288C82C-3F3E-4501-8878-A310FCA284FE}|gkiw_st_10_win.vcxproj|solutionrelative:f_simplest.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7288C82C-3F3E-4501-8878-A310FCA284FE}|gkiw_st_10_win.vcxproj|C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\v_simplest.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7288C82C-3F3E-4501-8878-A310FCA284FE}|gkiw_st_10_win.vcxproj|solutionrelative:v_simplest.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "v_simplest.glsl",
+              "DocumentMoniker": "C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\v_simplest.glsl",
+              "RelativeDocumentMoniker": "v_simplest.glsl",
+              "ToolTip": "C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\v_simplest.glsl",
+              "RelativeToolTip": "v_simplest.glsl",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAmwCEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-06T09:27:34.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "f_simplest.glsl",
+              "DocumentMoniker": "C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\f_simplest.glsl",
+              "RelativeDocumentMoniker": "f_simplest.glsl",
+              "ToolTip": "C:\\Users\\48663\\Desktop\\grafa\\gkiw_st_10_win\\f_simplest.glsl",
+              "RelativeToolTip": "f_simplest.glsl",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABoAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-06T09:25:48.414Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
