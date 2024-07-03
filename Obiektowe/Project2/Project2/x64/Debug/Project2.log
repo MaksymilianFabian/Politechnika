@@ -1,0 +1,4 @@
+﻿  Project2.cpp
+E:\Ważne\Studia\Semestr_3\Obiektowe\Project2\Project2\Project2.cpp(15,77): warning C4244: 'initializing': conversion from 'double' to 'unsigned int', possible loss of data
+E:\Ważne\Studia\Semestr_3\Obiektowe\Project2\Project2\Project2.cpp(46,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Project2.vcxproj -> E:\Ważne\Studia\Semestr_3\Obiektowe\Project2\x64\Debug\Project2.exe
