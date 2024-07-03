@@ -1,0 +1,9 @@
+vcom -2008 -autoorder *.vhd
+vsim -voptargs=+acc key2display_tb
+view wave -title test_wave
+view signals
+add wave *
+add wave -position insertpoint  \
+sim:/key2display_tb/UUT/clk_aft_div
+run 100000
+wave zoom full
